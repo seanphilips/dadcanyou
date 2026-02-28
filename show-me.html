@@ -396,20 +396,22 @@
 
   <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     // Filter
-    const btns = document.querySelectorAll('.filter-btn');
-    const cards = document.querySelectorAll('.post-card');
+    document.addEventListener('DOMContentLoaded', function() {
+      var btns = document.querySelectorAll('.filter-btn');
+      var cards = document.querySelectorAll('.post-card');
 
-    btns.forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        btns.forEach(function(b) { b.classList.remove('active'); });
-        btn.classList.add('active');
-        var filter = btn.getAttribute('data-filter');
-        cards.forEach(function(card) {
-          if (filter === 'all' || card.getAttribute('data-topic') === filter) {
-            card.classList.remove('hidden');
-          } else {
-            card.classList.add('hidden');
-          }
+      btns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          btns.forEach(function(b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+          var filter = btn.getAttribute('data-filter');
+          cards.forEach(function(card) {
+            if (filter === 'all' || card.getAttribute('data-topic') === filter) {
+              card.classList.remove('hidden');
+            } else {
+              card.classList.add('hidden');
+            }
+          });
         });
       });
     });
