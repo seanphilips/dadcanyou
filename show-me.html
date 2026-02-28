@@ -27,7 +27,7 @@
     .filter-btn.is-active { background: var(--black); border-color: var(--black); color: var(--offwhite); }
     .contribute-line { font-family: 'Libre Baskerville', serif; font-size: 0.85rem; color: var(--mid); margin-bottom: 2.5rem; }
     .contribute-line a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent); }
-    .post-card { border-top: 1px solid var(--rule); padding: 2rem 0; display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: start; cursor: pointer; text-decoration: none; }
+    .post-card { border-top: 1px solid var(--rule); padding: 2rem 0; display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: start; text-decoration: none; }
     .post-card:last-child { border-bottom: 1px solid var(--rule); }
     .post-card:hover .post-title { color: var(--accent); }
     .post-tag { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.4rem; }
@@ -37,7 +37,6 @@
     .post-meta span { color: var(--black); }
     .post-arrow { font-size: 1.2rem; color: var(--rule); padding-top: 0.25rem; transition: color 0.2s, transform 0.2s; }
     .post-card:hover .post-arrow { color: var(--accent); transform: translateX(4px); }
-    .hidden { display: none !important; }
     .footer-newsletter { border-top: 1px solid var(--rule); padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
     .newsletter-label { font-family: 'Libre Baskerville', serif; font-size: 0.95rem; color: var(--black); white-space: nowrap; }
     .newsletter-form { display: flex; flex: 1; max-width: 380px; }
@@ -76,12 +75,12 @@
     <h1 class="page-headline">Dad, can you show me<em>?</em></h1>
 
     <div class="filters">
-      <button class="filter-btn is-active" data-filter="all" onclick="filterFeed(this,'all')">All</button>
-      <button class="filter-btn" data-filter="the-house" onclick="filterFeed(this,'the-house')">The House</button>
-      <button class="filter-btn" data-filter="your-car" onclick="filterFeed(this,'your-car')">Your Car</button>
-      <button class="filter-btn" data-filter="your-money" onclick="filterFeed(this,'your-money')">Your Money</button>
-      <button class="filter-btn" data-filter="your-health" onclick="filterFeed(this,'your-health')">Your Health</button>
-      <button class="filter-btn" data-filter="your-work" onclick="filterFeed(this,'your-work')">Your Work</button>
+      <button class="filter-btn is-active" onclick="filterFeed(this,'all')">All</button>
+      <button class="filter-btn" onclick="filterFeed(this,'the-house')">The House</button>
+      <button class="filter-btn" onclick="filterFeed(this,'your-car')">Your Car</button>
+      <button class="filter-btn" onclick="filterFeed(this,'your-money')">Your Money</button>
+      <button class="filter-btn" onclick="filterFeed(this,'your-health')">Your Health</button>
+      <button class="filter-btn" onclick="filterFeed(this,'your-work')">Your Work</button>
     </div>
 
     <p class="contribute-line">We&#8217;re looking for your practical skills. <a href="/contribute.html">Become a contributor.</a></p>
@@ -166,35 +165,31 @@
     <div class="footer-links">
       <a href="/about.html">About</a>
       <a href="/contribute.html">Contribute</a>
-      <a href="/cdn-cgi/l/email-protection#adccdfd9c4ded9eddec8ccc3ddc5c4c1c4ddde83cec2c0">Contact</a>
+      <a href="mailto:artist@seanphilips.com">Contact</a>
     </div>
   </footer>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-    // Filter buttons
-    var btns = document.querySelectorAll('.filter-btn');
-    var cards = document.querySelectorAll('#feed .post-card');
-
-    for (var i = 0; i < btns.length; i++) {
-      btns[i].addEventListener('click', function() {
-        for (var j = 0; j < btns.length; j++) {
-          btns[j].classList.remove('is-active');
-        }
-        this.classList.add('is-active');
-        var filter = this.getAttribute('data-filter');
-        for (var k = 0; k < cards.length; k++) {
-          if (filter === 'all' || cards[k].getAttribute('data-topic') === filter) {
-            cards[k].classList.remove('hidden');
-          } else {
-            cards[k].classList.add('hidden');
-          }
-        }
-      });
+  <script>
+    function filterFeed(btn, filter) {
+      var btns = document.querySelectorAll('.filter-btn');
+      var cards = document.querySelectorAll('#feed .post-card');
+      for (var i = 0; i < btns.length; i++) {
+        btns[i].classList.remove('is-active');
+      }
+      btn.classList.add('is-active');
+      for (var i = 0; i < cards.length; i++) {
+        cards[i].style.display = (filter === 'all' || cards[i].getAttribute('data-topic') === filter) ? '' : 'none';
+      }
     }
 
-    // Newsletter
     var nlForm = document.getElementById('nl-sm');
     var nlOk = document.getElementById('nl-sm-ok');
     nlForm.addEventListener('submit', function(e) {
       e.preventDefault();
-      fetch(nlForm.action, { method: 'POST', body: new FormData(nlForm), headers: { 'Accept': 'application/js
+      fetch(nlForm.action, { method: 'POST', body: new FormData(nlForm), headers: { 'Accept': 'application/json' } })
+        .then(function(r) { if (r.ok) { nlForm.style.display = 'none'; nlOk.style.display = 'block'; } });
+    });
+  </script>
+
+</body>
+</html>
