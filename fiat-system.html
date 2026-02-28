@@ -80,6 +80,8 @@
   <nav class="topnav">
     <a href="/index.html" class="nav-logo">Dad, Can You<span class="question-mark">?</span></a>
     <ul class="nav-links">
+      <li><a href="/show-me.html">Show Me</a></li>
+      <li><a href="/teach-me.html">Teach Me</a></li>
       <li><a href="/about.html">About</a></li>
       <li><a href="/contribute.html">Contribute</a></li>
     </ul>
@@ -153,20 +155,14 @@
     <div class="footer-links">
       <a href="/about.html">About</a>
       <a href="/contribute.html">Contribute</a>
-      <a href="mailto:artist@seanphilips.com">Contact</a>
+      <a href="/cdn-cgi/l/email-protection#debfacaab7adaa9eadbbbfb0aeb6b7b2b7aeadf0bdb1b3">Contact</a>
     </div>
   </footer>
-  <script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     (function() {{
       var form = document.getElementById('newsletter-form-fiat');
       var success = document.getElementById('newsletter-success-fiat');
       form.addEventListener('submit', async function(e) {{
         e.preventDefault();
         var data = new FormData(form);
-        var res = await fetch(form.action, {{ method: 'POST', body: data, headers: {{ 'Accept': 'application/json' }} }});
-        if (res.ok) {{ form.style.display = 'none'; success.style.display = 'block'; }}
-      }});
-    }})();
-  </script>
-</body>
-</html>
+        var res = await fetch(form.action, {{ method: 'POST', body: data, headers: {{ 'Accept': 'applicatio

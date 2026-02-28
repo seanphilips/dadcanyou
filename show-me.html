@@ -300,6 +300,8 @@
   <nav class="topnav">
     <a href="/index.html" class="nav-logo">Dad, Can You<span class="question-mark">?</span></a>
     <ul class="nav-links">
+      <li><a href="/show-me.html">Show Me</a></li>
+      <li><a href="/teach-me.html">Teach Me</a></li>
       <li><a href="/about.html">About</a></li>
       <li><a href="/contribute.html">Contribute</a></li>
     </ul>
@@ -397,22 +399,17 @@
   <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     // Filter
     document.addEventListener('DOMContentLoaded', function() {
-      var btns = document.querySelectorAll('.filter-btn');
-      var cards = document.querySelectorAll('.post-card');
-
+      var btns = [].slice.call(document.querySelectorAll('.filter-btn'));
+      var cards = [].slice.call(document.querySelectorAll('.post-card'));
       btns.forEach(function(btn) {
-        btn.addEventListener('click', function() {
-          btns.forEach(function(b) { b.classList.remove('active'); });
-          btn.classList.add('active');
+        btn.onclick = function() {
+          btns.forEach(function(b) { b.className = b.className.replace(' active',''); });
+          btn.className += ' active';
           var filter = btn.getAttribute('data-filter');
           cards.forEach(function(card) {
-            if (filter === 'all' || card.getAttribute('data-topic') === filter) {
-              card.classList.remove('hidden');
-            } else {
-              card.classList.add('hidden');
-            }
+            card.style.display = (filter === 'all' || card.getAttribute('data-topic') === filter) ? '' : 'none';
           });
-        });
+        };
       });
     });
 
