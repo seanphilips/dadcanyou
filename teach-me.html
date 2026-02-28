@@ -9,278 +9,50 @@
   <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --black: #111010;
-      --offwhite: #F5F2EC;
-      --accent: #9B2A2A;
-      --accent-hover: #7a1f1f;
-      --mid: #6B6560;
-      --rule: #D8D3CB;
-    }
-
-    body {
-      background-color: var(--offwhite);
-      color: var(--black);
-      font-family: 'Lato', sans-serif;
-      font-weight: 300;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    nav.topnav {
-      padding: 2rem 3rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid var(--rule);
-      opacity: 0;
-      animation: fadeUp 0.6s ease forwards;
-      animation-delay: 0.1s;
-    }
-
-    .nav-logo {
-      font-family: 'Libre Baskerville', serif;
-      font-size: 1.1rem;
-      font-weight: 400;
-      letter-spacing: 0.02em;
-      color: var(--black);
-      text-decoration: none;
-    }
-
-    .nav-logo .question-mark { color: var(--accent); font-style: italic; }
-    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-
-    .nav-links a {
-      font-size: 0.8rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--mid);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
-
-    main {
-      flex: 1;
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 5rem 2rem 6rem;
-      width: 100%;
-    }
-
-    .page-label {
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--mid);
-      margin-bottom: 1rem;
-      opacity: 0;
-      animation: fadeUp 0.6s ease forwards;
-      animation-delay: 0.2s;
-    }
-
-    .page-headline {
-      font-family: 'Libre Baskerville', serif;
-      font-size: clamp(1.6rem, 5vw, 2.2rem);
-      font-weight: 400;
-      color: var(--black);
-      margin-bottom: 3rem;
-      opacity: 0;
-      animation: fadeUp 0.6s ease forwards;
-      animation-delay: 0.3s;
-    }
-
+    :root { --black: #111010; --offwhite: #F5F2EC; --accent: #9B2A2A; --mid: #6B6560; --rule: #D8D3CB; }
+    body { background-color: var(--offwhite); color: var(--black); font-family: 'Lato', sans-serif; font-weight: 300; min-height: 100vh; display: flex; flex-direction: column; }
+    nav.topnav { padding: 2rem 3rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--rule); }
+    .nav-logo { font-family: 'Libre Baskerville', serif; font-size: 1.1rem; font-weight: 400; color: var(--black); text-decoration: none; }
+    .nav-logo .qm { color: var(--accent); font-style: italic; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+    main { flex: 1; max-width: 760px; margin: 0 auto; padding: 5rem 2rem 6rem; width: 100%; }
+    .page-label { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mid); margin-bottom: 1rem; }
+    .page-headline { font-family: 'Libre Baskerville', serif; font-size: clamp(1.6rem, 5vw, 2.2rem); font-weight: 400; color: var(--black); margin-bottom: 2.5rem; }
     .page-headline em { font-style: italic; color: var(--accent); }
-
-    .filters {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 3rem;
-      opacity: 0;
-      animation: fadeUp 0.6s ease forwards;
-      animation-delay: 0.4s;
-    }
-
-    .filter-btn {
-      background: none;
-      border: 1px solid var(--rule);
-      padding: 0.4rem 0.9rem;
-      font-family: 'Lato', sans-serif;
-      font-size: 0.7rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--mid);
-      cursor: pointer;
-      transition: all 0.2s;
-      border-radius: 0;
-    }
-
+    .filters { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem; }
+    .filter-btn { background: none; border: 1px solid var(--rule); padding: 0.4rem 0.9rem; font-family: 'Lato', sans-serif; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid); cursor: pointer; transition: all 0.2s; }
     .filter-btn:hover { border-color: var(--black); color: var(--black); }
-    .filter-btn.active { background: var(--black); border-color: var(--black); color: var(--offwhite); }
-
-    .feed {
-      opacity: 0;
-      animation: fadeUp 0.6s ease forwards;
-      animation-delay: 0.5s;
-    }
-
-    .post-card {
-      border-top: 1px solid var(--rule);
-      padding: 2rem 0;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 1rem;
-      align-items: start;
-      cursor: pointer;
-      transition: opacity 0.15s;
-    }
-
+    .filter-btn.is-active { background: var(--black); border-color: var(--black); color: var(--offwhite); }
+    .contribute-line { font-family: 'Libre Baskerville', serif; font-size: 0.85rem; color: var(--mid); margin-bottom: 2.5rem; }
+    .contribute-line a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent); }
+    .post-card { border-top: 1px solid var(--rule); padding: 2rem 0; display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: start; cursor: pointer; text-decoration: none; }
     .post-card:last-child { border-bottom: 1px solid var(--rule); }
     .post-card:hover .post-title { color: var(--accent); }
-
-    .post-tag {
-      font-size: 0.65rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 0.4rem;
-    }
-
-    .post-title {
-      font-family: 'Libre Baskerville', serif;
-      font-size: 1.1rem;
-      font-weight: 400;
-      line-height: 1.35;
-      color: var(--black);
-      margin-bottom: 0.5rem;
-      transition: color 0.2s;
-    }
-
-    .post-excerpt {
-      font-size: 0.9rem;
-      line-height: 1.65;
-      color: var(--mid);
-      margin-bottom: 0.75rem;
-    }
-
-    .post-meta {
-      font-size: 0.72rem;
-      letter-spacing: 0.06em;
-      color: var(--mid);
-    }
-
+    .post-tag { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.4rem; }
+    .post-title { font-family: 'Libre Baskerville', serif; font-size: 1.1rem; font-weight: 400; line-height: 1.35; color: var(--black); margin-bottom: 0.5rem; transition: color 0.2s; }
+    .post-excerpt { font-size: 0.9rem; line-height: 1.65; color: var(--mid); margin-bottom: 0.75rem; }
+    .post-meta { font-size: 0.72rem; letter-spacing: 0.06em; color: var(--mid); }
     .post-meta span { color: var(--black); }
-
-    .post-arrow {
-      font-size: 1.2rem;
-      color: var(--rule);
-      padding-top: 0.25rem;
-      transition: color 0.2s, transform 0.2s;
-    }
-
+    .post-arrow { font-size: 1.2rem; color: var(--rule); padding-top: 0.25rem; transition: color 0.2s, transform 0.2s; }
     .post-card:hover .post-arrow { color: var(--accent); transform: translateX(4px); }
-    .post-card.hidden { display: none; }
-
-    .footer-newsletter {
-      border-top: 1px solid var(--rule);
-      padding: 2rem 3rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 2rem;
-    }
-
-    .newsletter-label {
-      font-family: 'Libre Baskerville', serif;
-      font-size: 0.95rem;
-      color: var(--black);
-      white-space: nowrap;
-    }
-
+    .hidden { display: none !important; }
+    .footer-newsletter { border-top: 1px solid var(--rule); padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
+    .newsletter-label { font-family: 'Libre Baskerville', serif; font-size: 0.95rem; color: var(--black); white-space: nowrap; }
     .newsletter-form { display: flex; flex: 1; max-width: 380px; }
-
-    .newsletter-input {
-      flex: 1;
-      background: transparent;
-      border: none;
-      border-bottom: 1px solid var(--rule);
-      padding: 0.5rem 0;
-      font-family: 'Libre Baskerville', serif;
-      font-size: 0.9rem;
-      color: var(--black);
-      outline: none;
-      transition: border-color 0.2s;
-      border-radius: 0;
-    }
-
+    .newsletter-input { flex: 1; background: transparent; border: none; border-bottom: 1px solid var(--rule); padding: 0.5rem 0; font-family: 'Libre Baskerville', serif; font-size: 0.9rem; color: var(--black); outline: none; transition: border-color 0.2s; border-radius: 0; }
     .newsletter-input:focus { border-color: var(--accent); }
-
-    .newsletter-submit {
-      background: none;
-      border: none;
-      border-bottom: 1px solid var(--rule);
-      padding: 0.5rem 0 0.5rem 1rem;
-      font-family: 'Lato', sans-serif;
-      font-size: 0.7rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--mid);
-      cursor: pointer;
-      transition: color 0.2s;
-      white-space: nowrap;
-    }
-
+    .newsletter-submit { background: none; border: none; border-bottom: 1px solid var(--rule); padding: 0.5rem 0 0.5rem 1rem; font-family: 'Lato', sans-serif; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--mid); cursor: pointer; transition: color 0.2s; white-space: nowrap; }
     .newsletter-submit:hover { color: var(--accent); }
-
-    .newsletter-success {
-      display: none;
-      font-family: 'Libre Baskerville', serif;
-      font-style: italic;
-      color: var(--accent);
-      font-size: 0.9rem;
-    }
-
-    footer {
-      padding: 2rem 3rem;
-      border-top: 1px solid var(--rule);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .footer-location {
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--mid);
-    }
-
+    .newsletter-success { display: none; font-family: 'Libre Baskerville', serif; font-style: italic; color: var(--accent); font-size: 0.9rem; }
+    footer { padding: 2rem 3rem; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; }
+    .footer-location { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); }
     .footer-links { display: flex; gap: 1.5rem; }
-
-    .footer-links a {
-      font-size: 0.75rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--mid);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
+    .footer-links a { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mid); text-decoration: none; transition: color 0.2s; }
     .footer-links a:hover { color: var(--accent); }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(16px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
     @media (max-width: 640px) {
-      nav.topnav { padding: 1.5rem; }
-      .nav-links { gap: 1.5rem; }
-      main { padding: 3rem 1.5rem; }
+      nav.topnav { padding: 1.5rem; } .nav-links { gap: 1rem; } main { padding: 3rem 1.5rem; }
       .footer-newsletter { flex-direction: column; align-items: flex-start; padding: 1.5rem; }
       .newsletter-form { width: 100%; max-width: 100%; }
       footer { padding: 1.5rem; flex-direction: column; align-items: flex-start; gap: 1rem; }
@@ -290,7 +62,7 @@
 <body>
 
   <nav class="topnav">
-    <a href="/index.html" class="nav-logo">Dad, Can You<span class="question-mark">?</span></a>
+    <a href="/index.html" class="nav-logo">Dad, Can You<span class="qm">?</span></a>
     <ul class="nav-links">
       <li><a href="/show-me.html">Show Me</a></li>
       <li><a href="/teach-me.html">Teach Me</a></li>
@@ -304,7 +76,7 @@
     <h1 class="page-headline">Dad, can you teach me<em>?</em></h1>
 
     <div class="filters">
-      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn is-active" data-filter="all">All</button>
       <button class="filter-btn" data-filter="money">Money</button>
       <button class="filter-btn" data-filter="relationships">Relationships</button>
       <button class="filter-btn" data-filter="work">Work</button>
@@ -312,71 +84,71 @@
       <button class="filter-btn" data-filter="character">Character</button>
     </div>
 
-    <p style="font-family: 'Libre Baskerville', serif; font-size: 0.85rem; color: #6B6560; margin-bottom: 2.5rem;">We&#8217;re looking for your life lessons. <a href="/contribute.html" style="color: #9B2A2A; text-decoration: none; border-bottom: 1px solid #9B2A2A;">Become a contributor.</a></p>
+    <p class="contribute-line">We&#8217;re looking for your life lessons. <a href="/contribute.html">Become a contributor.</a></p>
 
-        <div class="feed">
+    <div id="feed">
 
-      <div class="post-card" data-topic="money">
+      <a class="post-card" href="/fiat-system.html" data-topic="money">
         <div>
           <p class="post-tag">Money</p>
-          <h2 class="post-title"><a href="/fiat-system.html" style="color:inherit;text-decoration:none;">The fiat system. How money is actually created.</a></h2>
+          <h2 class="post-title">The fiat system. How money is actually created.</h2>
           <p class="post-excerpt">What they don&#8217;t teach you in school. How debt becomes money and why your dollar is worth less every year.</p>
-          <p class="post-meta">By <span>Sean Philips</span> &nbsp;&middot;&nbsp; Dad, Can You?</p>
+          <p class="post-meta">By <span>Sean Philips</span></p>
         </div>
         <div class="post-arrow">&#8594;</div>
-      </div>
+      </a>
 
-      <div class="post-card" data-topic="relationships">
+      <a class="post-card" href="/be-the-person.html" data-topic="relationships">
         <div>
           <p class="post-tag">Relationships</p>
-          <h2 class="post-title"><a href="/be-the-person.html" style="color:inherit;text-decoration:none;">Be the person you want to attract.</a></h2>
+          <h2 class="post-title">Be the person you want to attract.</h2>
           <p class="post-excerpt">We spend a lot of time thinking about what we want in someone else. Almost no time asking if we are that person.</p>
-          <p class="post-meta">By <span>Sean Philips</span> &nbsp;&middot;&nbsp; Dad, Can You?</p>
+          <p class="post-meta">By <span>Sean Philips</span></p>
         </div>
         <div class="post-arrow">&#8594;</div>
-      </div>
+      </a>
 
-      <div class="post-card" data-topic="work">
+      <a class="post-card" href="/find-your-work.html" data-topic="work">
         <div>
           <p class="post-tag">Work</p>
-          <h2 class="post-title"><a href="/find-your-work.html" style="color:inherit;text-decoration:none;">Find something you&#8217;d do for free. Then find a way to get paid for it.</a></h2>
+          <h2 class="post-title">Find something you&#8217;d do for free. Then find a way to get paid for it.</h2>
           <p class="post-excerpt">The person who would do the work for free will always outwork the person doing it for money.</p>
-          <p class="post-meta">By <span>Sean Philips</span> &nbsp;&middot;&nbsp; Dad, Can You?</p>
+          <p class="post-meta">By <span>Sean Philips</span></p>
         </div>
         <div class="post-arrow">&#8594;</div>
-      </div>
+      </a>
 
-      <div class="post-card" data-topic="hard-times">
+      <a class="post-card" href="/this-too-shall-pass.html" data-topic="hard-times">
         <div>
           <p class="post-tag">Hard Times</p>
-          <h2 class="post-title"><a href="/this-too-shall-pass.html" style="color:inherit;text-decoration:none;">This too shall pass.</a></h2>
+          <h2 class="post-title">This too shall pass.</h2>
           <p class="post-excerpt">Neither good times nor bad times last. What actually gets you through is having something inside that doesn&#8217;t depend on the circumstances.</p>
-          <p class="post-meta">By <span>Sean Philips</span> &nbsp;&middot;&nbsp; Dad, Can You?</p>
+          <p class="post-meta">By <span>Sean Philips</span></p>
         </div>
         <div class="post-arrow">&#8594;</div>
-      </div>
+      </a>
 
-      <div class="post-card" data-topic="character">
+      <a class="post-card" href="/man-of-your-word.html" data-topic="character">
         <div>
           <p class="post-tag">Character</p>
-          <h2 class="post-title"><a href="/man-of-your-word.html" style="color:inherit;text-decoration:none;">Being a man of your word. No matter what.</a></h2>
+          <h2 class="post-title">Being a man of your word. No matter what.</h2>
           <p class="post-excerpt">Your word is the only currency that doesn&#8217;t inflate. Here&#8217;s what it means to actually keep it.</p>
-          <p class="post-meta">By <span>Sean Philips</span> &nbsp;&middot;&nbsp; Dad, Can You?</p>
+          <p class="post-meta">By <span>Sean Philips</span></p>
         </div>
         <div class="post-arrow">&#8594;</div>
-      </div>
+      </a>
 
     </div>
   </main>
 
   <div class="footer-newsletter">
     <span class="newsletter-label">New posts to your inbox.</span>
-    <form class="newsletter-form" id="newsletter-form-tm" action="https://formspree.io/f/mlgwvywy" method="POST">
+    <form class="newsletter-form" id="nl-tm" action="https://formspree.io/f/mlgwvywy" method="POST">
       <input type="hidden" name="_subject" value="DCY-SUBSCRIBER">
-      <input type="email" name="email" class="newsletter-input" placeholder="your@email.com" required autocomplete="email">
+      <input type="email" name="email" class="newsletter-input" placeholder="your@email.com" required>
       <button type="submit" class="newsletter-submit">Subscribe</button>
     </form>
-    <p class="newsletter-success" id="newsletter-success-tm">You're in.</p>
+    <p class="newsletter-success" id="nl-tm-ok">You&#8217;re in.</p>
   </div>
 
   <footer>
@@ -384,33 +156,39 @@
     <div class="footer-links">
       <a href="/about.html">About</a>
       <a href="/contribute.html">Contribute</a>
-      <a href="/cdn-cgi/l/email-protection#11706365786265516274707f6179787d7861623f727e7c">Contact</a>
+      <a href="mailto:artist@seanphilips.com">Contact</a>
     </div>
   </footer>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-    const btns = document.querySelectorAll('.filter-btn');
-    const cards = document.querySelectorAll('.post-card');
+  <script>
+    var btns = document.querySelectorAll('.filter-btn');
+    var cards = document.querySelectorAll('#feed .post-card');
 
-    btns.forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        btns.forEach(function(b) { b.classList.remove('active'); });
-        btn.classList.add('active');
-        var filter = btn.getAttribute('data-filter');
-        cards.forEach(function(card) {
-          if (filter === 'all' || card.getAttribute('data-topic') === filter) {
-            card.classList.remove('hidden');
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].addEventListener('click', function() {
+        for (var j = 0; j < btns.length; j++) {
+          btns[j].classList.remove('is-active');
+        }
+        this.classList.add('is-active');
+        var filter = this.getAttribute('data-filter');
+        for (var k = 0; k < cards.length; k++) {
+          if (filter === 'all' || cards[k].getAttribute('data-topic') === filter) {
+            cards[k].classList.remove('hidden');
           } else {
-            card.classList.add('hidden');
+            cards[k].classList.add('hidden');
           }
-        });
+        }
       });
-    });
+    }
 
-    (function() {
-      var form = document.getElementById('newsletter-form-tm');
-      var success = document.getElementById('newsletter-success-tm');
-      form.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        var data = new FormData(form);
-        var res = await fetch(form.action, { method: 'POST', body: data, headers: { 'Accept': 'applic
+    var nlForm = document.getElementById('nl-tm');
+    var nlOk = document.getElementById('nl-tm-ok');
+    nlForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      fetch(nlForm.action, { method: 'POST', body: new FormData(nlForm), headers: { 'Accept': 'application/json' } })
+        .then(function(r) { if (r.ok) { nlForm.style.display = 'none'; nlOk.style.display = 'block'; } });
+    });
+  </script>
+
+</body>
+</html>
