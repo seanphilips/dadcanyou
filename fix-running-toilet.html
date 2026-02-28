@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to fix a running toilet — Dad, Can You?</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --black: #111010; --offwhite: #F5F2EC; --accent: #9B2A2A; --mid: #6B6560; --rule: #D8D3CB; }
+    body { background-color: var(--offwhite); color: var(--black); font-family: 'Lato', sans-serif; font-weight: 300; min-height: 100vh; display: flex; flex-direction: column; }
+    nav.topnav { padding: 2rem 3rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--rule); }
+    .nav-logo { font-family: 'Libre Baskerville', serif; font-size: 1.1rem; font-weight: 400; color: var(--black); text-decoration: none; }
+    .nav-logo .qm { color: var(--accent); font-style: italic; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+    main { flex: 1; max-width: 600px; margin: 0 auto; padding: 5rem 2rem 6rem; width: 100%; }
+    .breadcrumb { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--mid); margin-bottom: 2rem; }
+    .breadcrumb a { color: var(--mid); text-decoration: none; transition: color 0.2s; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb .sep { margin: 0 0.5rem; }
+    .post-header { margin-bottom: 2.5rem; }
+    .post-tag { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem; }
+    .post-title { font-family: 'Libre Baskerville', serif; font-size: clamp(1.5rem, 5vw, 2rem); font-weight: 400; line-height: 1.25; color: var(--black); margin-bottom: 1.25rem; }
+    .post-byline { display: flex; align-items: center; gap: 1rem; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 0.85rem 0; }
+    .byline-name { font-family: 'Libre Baskerville', serif; font-size: 0.9rem; color: var(--black); }
+    .byline-sep { color: var(--rule); }
+    .byline-tag { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid); }
+    .post-image-wrap { margin: 2.5rem 0; }
+    .post-image-wrap img { width: 100%; display: block; filter: grayscale(100%); }
+    .post-body p { font-family: 'Libre Baskerville', serif; font-size: 1rem; line-height: 1.8; color: var(--black); margin-bottom: 1.5rem; }
+    .post-body h2 { font-family: 'Libre Baskerville', serif; font-size: 1.1rem; font-weight: 700; color: var(--black); margin: 2.5rem 0 0.75rem; }
+    .post-body a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent); }
+    .tldr { margin-top: 3rem; padding: 1.75rem 2rem; border-left: 3px solid var(--accent); background: rgba(155,42,42,0.04); }
+    .tldr-label { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; font-family: 'Lato', sans-serif; }
+    .tldr-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .tldr-list li { font-family: 'Libre Baskerville', serif; font-size: 0.92rem; line-height: 1.5; color: var(--black); padding-left: 1.1rem; position: relative; }
+    .tldr-list li::before { content: '\2014'; position: absolute; left: 0; color: var(--accent); }
+    .related { margin-top: 4rem; padding-top: 2.5rem; border-top: 1px solid var(--rule); }
+    .related-label { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--mid); margin-bottom: 1.75rem; }
+    .related-card { border-top: 1px solid var(--rule); padding: 1.25rem 0; display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: center; text-decoration: none; }
+    .related-card:last-child { border-bottom: 1px solid var(--rule); }
+    .related-tag { font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.3rem; }
+    .related-title { font-family: 'Libre Baskerville', serif; font-size: 0.95rem; font-weight: 400; color: var(--black); line-height: 1.35; transition: color 0.2s; }
+    .related-card:hover .related-title { color: var(--accent); }
+    .related-arrow { color: var(--rule); font-size: 1rem; transition: color 0.2s, transform 0.2s; }
+    .related-card:hover .related-arrow { color: var(--accent); transform: translateX(4px); }
+    .footer-newsletter { border-top: 1px solid var(--rule); padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
+    .newsletter-label { font-family: 'Libre Baskerville', serif; font-size: 0.95rem; color: var(--black); white-space: nowrap; }
+    .newsletter-form { display: flex; flex: 1; max-width: 380px; }
+    .newsletter-input { flex: 1; background: transparent; border: none; border-bottom: 1px solid var(--rule); padding: 0.5rem 0; font-family: 'Libre Baskerville', serif; font-size: 0.9rem; color: var(--black); outline: none; transition: border-color 0.2s; border-radius: 0; }
+    .newsletter-input:focus { border-color: var(--accent); }
+    .newsletter-submit { background: none; border: none; border-bottom: 1px solid var(--rule); padding: 0.5rem 0 0.5rem 1rem; font-family: 'Lato', sans-serif; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--mid); cursor: pointer; transition: color 0.2s; white-space: nowrap; }
+    .newsletter-submit:hover { color: var(--accent); }
+    .newsletter-success { display: none; font-family: 'Libre Baskerville', serif; font-style: italic; color: var(--accent); font-size: 0.9rem; }
+    footer { padding: 2rem 3rem; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; }
+    .footer-location { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mid); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--accent); }
+    @media (max-width: 640px) {
+      nav.topnav { padding: 1.5rem; } .nav-links { gap: 1rem; } main { padding: 3rem 1.5rem; }
+      .footer-newsletter { flex-direction: column; align-items: flex-start; padding: 1.5rem; }
+      .newsletter-form { width: 100%; max-width: 100%; }
+      footer { padding: 1.5rem; flex-direction: column; align-items: flex-start; gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="topnav">
+    <a href="/index.html" class="nav-logo">Dad, Can You<span class="qm">?</span></a>
+    <ul class="nav-links">
+      <li><a href="/show-me.html">Show Me</a></li>
+      <li><a href="/teach-me.html">Teach Me</a></li>
+      <li><a href="/about.html">About</a></li>
+      <li><a href="/contribute.html">Contribute</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <p class="breadcrumb">
+      <a href="/show-me.html">Show Me</a>
+      <span class="sep">/</span>
+      The House
+    </p>
+
+    <div class="post-header">
+      <p class="post-tag">The House</p>
+      <h1 class="post-title">How to fix a running toilet</h1>
+      <div class="post-byline">
+        <span class="byline-name">Sean Philips</span>
+        <span class="byline-sep">|</span>
+        <span class="byline-tag">Dad, Can You?</span>
+      </div>
+    </div>
+
+    <div class="post-image-wrap">
+      <img src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=1200&q=80&auto=format&fit=crop" alt="How to fix a running toilet" loading="lazy">
+    </div>
+
+    <div class="post-body">
+      <p>It runs all night. You know the sound. And you keep closing the bathroom door and hoping it fixes itself, which it won&#8217;t, because that&#8217;s not how toilets work.</p>
+
+      <p>The good news is that a running toilet is almost always the same problem. The flapper &#8212; the rubber seal at the bottom of the tank &#8212; has worn out and isn&#8217;t seating properly. Water leaks through, the tank never fills completely, and the fill valve keeps running trying to top it up. That&#8217;s the sound.</p>
+
+      <h2>What you&#8217;ll need</h2>
+
+      <p>A replacement flapper kit from any hardware store. Bring your phone into the bathroom, take a photo of the inside of your tank, and show it to someone at the store. Flappers cost between $8 and $15 and come in a few sizes. You want the right one. That&#8217;s it. No tools required beyond your hands.</p>
+
+      <h2>What to do</h2>
+
+      <p>Turn off the water supply valve behind the toilet &#8212; it&#8217;s the oval handle coming out of the wall near the floor. Turn it clockwise until it stops. Flush the toilet to empty the tank. Unhook the old flapper from the two pegs on either side of the flush valve and disconnect the chain from the flush handle arm. Hook the new one on, reconnect the chain with a little slack in it, turn the water back on, and let the tank fill. Flush once. Listen.</p>
+
+      <p>If it stops running, you&#8217;re done. If it still runs, the chain might be too short and catching under the flapper &#8212; adjust it. If it still runs after that, the fill valve itself may need replacing, which is a slightly bigger job but still well within reach.</p>
+
+      <p>Rather have someone show you in person? <a href="/come-over.html">Find someone who can come over.</a></p>
+    </div>
+
+    <div class="tldr">
+      <p class="tldr-label">TL;DR</p>
+      <ul class="tldr-list">
+        <li>The culprit is almost always the flapper &#8212; a $8&#8211;15 rubber part</li>
+        <li>Take a photo of your tank before going to the hardware store</li>
+        <li>Shut off the supply valve behind the toilet before you start</li>
+        <li>Unhook old flapper, snap new one on, reconnect chain with a little slack</li>
+        <li>If it still runs after, the chain is catching &#8212; adjust it</li>
+        <li>Still running? The fill valve needs replacing &#8212; bigger job, still doable</li>
+      </ul>
+    </div>
+
+    <div class="related">
+      <p class="related-label">More from The House</p>
+      <a class="related-card" href="/show-me.html">
+        <div>
+          <p class="related-tag">The House</p>
+          <p class="related-title">Back to Show Me</p>
+        </div>
+        <span class="related-arrow">&#8594;</span>
+      </a>
+      <a class="related-card" href="/winterize-your-car.html">
+        <div>
+          <p class="related-tag">Your Car</p>
+          <p class="related-title">How to winterize your car</p>
+        </div>
+        <span class="related-arrow">&#8594;</span>
+      </a>
+    </div>
+
+  </main>
+
+  <div class="footer-newsletter">
+    <span class="newsletter-label">New posts to your inbox.</span>
+    <form class="newsletter-form" id="nl-frt" action="https://formspree.io/f/mlgwvywy" method="POST">
+      <input type="hidden" name="_subject" value="DCY-SUBSCRIBER">
+      <input type="email" name="email" class="newsletter-input" placeholder="your@email.com" required>
+      <button type="submit" class="newsletter-submit">Subscribe</button>
+    </form>
+    <p class="newsletter-success" id="nl-frt-ok">You&#8217;re in.</p>
+  </div>
+
+  <footer>
+    <span class="footer-location">Winnipeg, Manitoba</span>
+    <div class="footer-links">
+      <a href="/about.html">About</a>
+      <a href="/contribute.html">Contribute</a>
+      <a href="mailto:artist@seanphilips.com">Contact</a>
+    </div>
+  </footer>
+
+  <script>
+    var nlForm = document.getElementById('nl-frt');
+    var nlOk = document.getElementById('nl-frt-ok');
+    nlForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      fetch(nlForm.action, { method: 'POST', body: new FormData(nlForm), headers: { 'Accept': 'application/json' } })
+        .then(function(r) { if (r.ok) { nlForm.style.display = 'none'; nlOk.style.display = 'block'; } });
+    });
+  </script>
+
+</body>
+</html>

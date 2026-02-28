@@ -77,6 +77,7 @@
 
     <div class="filters">
       <button class="filter-btn is-active" data-filter="all" onclick="filterFeed(this,'all')">All</button>
+      <button class="filter-btn" data-filter="the-house" onclick="filterFeed(this,'the-house')">The House</button>
       <button class="filter-btn" data-filter="your-car" onclick="filterFeed(this,'your-car')">Your Car</button>
       <button class="filter-btn" data-filter="your-money" onclick="filterFeed(this,'your-money')">Your Money</button>
       <button class="filter-btn" data-filter="your-health" onclick="filterFeed(this,'your-health')">Your Health</button>
@@ -86,6 +87,16 @@
     <p class="contribute-line">We&#8217;re looking for your practical skills. <a href="/contribute.html">Become a contributor.</a></p>
 
     <div id="feed">
+
+      <a class="post-card" href="/fix-running-toilet.html" data-topic="the-house">
+        <div>
+          <p class="post-tag">The House</p>
+          <h2 class="post-title">How to fix a running toilet</h2>
+          <p class="post-excerpt">It runs all night and you keep ignoring it. Here&#8217;s what&#8217;s actually happening inside the tank, and how to fix it in under an hour with a $12 part.</p>
+          <p class="post-meta">By <span>Sean Philips</span></p>
+        </div>
+        <div class="post-arrow">&#8594;</div>
+      </a>
 
       <a class="post-card" href="/winterize-your-car.html" data-topic="your-car">
         <div>
@@ -155,11 +166,11 @@
     <div class="footer-links">
       <a href="/about.html">About</a>
       <a href="/contribute.html">Contribute</a>
-      <a href="mailto:artist@seanphilips.com">Contact</a>
+      <a href="/cdn-cgi/l/email-protection#adccdfd9c4ded9eddec8ccc3ddc5c4c1c4ddde83cec2c0">Contact</a>
     </div>
   </footer>
 
-  <script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     // Filter buttons
     var btns = document.querySelectorAll('.filter-btn');
     var cards = document.querySelectorAll('#feed .post-card');
@@ -186,10 +197,4 @@
     var nlOk = document.getElementById('nl-sm-ok');
     nlForm.addEventListener('submit', function(e) {
       e.preventDefault();
-      fetch(nlForm.action, { method: 'POST', body: new FormData(nlForm), headers: { 'Accept': 'application/json' } })
-        .then(function(r) { if (r.ok) { nlForm.style.display = 'none'; nlOk.style.display = 'block'; } });
-    });
-  </script>
-
-</body>
-</html>
+      fetch(nlForm.action, { method: 'POST', body: new FormData(nlForm), headers: { 'Accept': 'application/js
