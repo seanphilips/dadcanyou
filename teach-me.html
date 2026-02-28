@@ -76,12 +76,12 @@
     <h1 class="page-headline">Dad, can you teach me<em>?</em></h1>
 
     <div class="filters">
-      <button class="filter-btn is-active" data-filter="all">All</button>
-      <button class="filter-btn" data-filter="money">Money</button>
-      <button class="filter-btn" data-filter="relationships">Relationships</button>
-      <button class="filter-btn" data-filter="work">Work</button>
-      <button class="filter-btn" data-filter="hard-times">Hard Times</button>
-      <button class="filter-btn" data-filter="character">Character</button>
+      <button class="filter-btn is-active" data-filter="all" onclick="filterFeed(this,'all')">All</button>
+      <button class="filter-btn" data-filter="money" onclick="filterFeed(this,'money')">Money</button>
+      <button class="filter-btn" data-filter="relationships" onclick="filterFeed(this,'relationships')">Relationships</button>
+      <button class="filter-btn" data-filter="work" onclick="filterFeed(this,'work')">Work</button>
+      <button class="filter-btn" data-filter="hard-times" onclick="filterFeed(this,'hard-times')">Hard Times</button>
+      <button class="filter-btn" data-filter="character" onclick="filterFeed(this,'character')">Character</button>
     </div>
 
     <p class="contribute-line">We&#8217;re looking for your life lessons. <a href="/contribute.html">Become a contributor.</a></p>
@@ -161,24 +161,14 @@
   </footer>
 
   <script>
-    var btns = document.querySelectorAll('.filter-btn');
-    var cards = document.querySelectorAll('#feed .post-card');
-
-    for (var i = 0; i < btns.length; i++) {
-      btns[i].addEventListener('click', function() {
-        for (var j = 0; j < btns.length; j++) {
-          btns[j].classList.remove('is-active');
-        }
-        this.classList.add('is-active');
-        var filter = this.getAttribute('data-filter');
-        for (var k = 0; k < cards.length; k++) {
-          if (filter === 'all' || cards[k].getAttribute('data-topic') === filter) {
-            cards[k].classList.remove('hidden');
-          } else {
-            cards[k].classList.add('hidden');
-          }
-        }
-      });
+    function filterFeed(btn, filter) {
+      var btns = document.querySelectorAll('.filter-btn');
+      var cards = document.querySelectorAll('#feed .post-card');
+      for (var i = 0; i < btns.length; i++) { btns[i].classList.remove('is-active'); }
+      btn.classList.add('is-active');
+      for (var i = 0; i < cards.length; i++) {
+        cards[i].style.display = (filter === 'all' || cards[i].getAttribute('data-topic') === filter) ? '' : 'none';
+      }
     }
 
     var nlForm = document.getElementById('nl-tm');
