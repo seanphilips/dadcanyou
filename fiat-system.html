@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The fiat system. How money is actually created. &#8212; Dad, Can You?</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #111010; --offwhite: #F5F2EC; --accent: #9B2A2A;
+      --mid: #6B6560; --rule: #D8D3CB;
+    }
+    body { background-color: var(--offwhite); color: var(--black); font-family: "Lato", sans-serif; font-weight: 300; min-height: 100vh; display: flex; flex-direction: column; }
+    nav.topnav { padding: 2rem 3rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--rule); opacity: 0; animation: fadeUp 0.6s ease forwards; animation-delay: 0.1s; }
+    .nav-logo { font-family: "Libre Baskerville", serif; font-size: 1.1rem; font-weight: 400; color: var(--black); text-decoration: none; }
+    .nav-logo .question-mark { color: var(--accent); font-style: italic; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+    main { flex: 1; max-width: 600px; margin: 0 auto; padding: 5rem 2rem 6rem; width: 100%; }
+    .breadcrumb { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--mid); margin-bottom: 2rem; opacity: 0; animation: fadeUp 0.6s ease forwards; animation-delay: 0.2s; }
+    .breadcrumb a { color: var(--mid); text-decoration: none; transition: color 0.2s; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb .sep { margin: 0 0.5rem; }
+    .post-header { margin-bottom: 2.5rem; opacity: 0; animation: fadeUp 0.6s ease forwards; animation-delay: 0.3s; }
+    .post-tag { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem; }
+    .post-title { font-family: "Libre Baskerville", serif; font-size: clamp(1.5rem, 5vw, 2rem); font-weight: 400; line-height: 1.25; color: var(--black); margin-bottom: 1.25rem; }
+    .post-byline { display: flex; align-items: center; gap: 1rem; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 0.85rem 0; }
+    .byline-name { font-family: "Libre Baskerville", serif; font-size: 0.9rem; color: var(--black); }
+    .byline-sep { color: var(--rule); font-size: 1rem; }
+    .byline-tag { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid); }
+    .post-image-wrap { margin: 2.5rem 0; opacity: 0; animation: fadeUp 0.6s ease forwards; animation-delay: 0.4s; }
+    .post-image-wrap img { width: 100%; display: block; filter: grayscale(100%); }
+    .post-body { opacity: 0; animation: fadeUp 0.6s ease forwards; animation-delay: 0.5s; }
+    .post-body p { font-family: "Libre Baskerville", serif; font-size: 1rem; line-height: 1.8; color: var(--black); margin-bottom: 1.5rem; }
+    .post-body h2 { font-family: "Libre Baskerville", serif; font-size: 1.1rem; font-weight: 700; color: var(--black); margin: 2.5rem 0 0.75rem; }
+    .post-body strong { font-weight: 700; }
+    .post-body em { font-style: italic; color: var(--accent); }
+    .post-body a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent); }
+    .tldr { margin-top: 3rem; padding: 1.75rem 2rem; border-left: 3px solid var(--accent); background: rgba(155,42,42,0.04); }
+    .tldr-label { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; font-family: "Lato", sans-serif; }
+    .tldr-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .tldr-list li { font-family: "Libre Baskerville", serif; font-size: 0.92rem; line-height: 1.5; color: var(--black); padding-left: 1.1rem; position: relative; }
+    .tldr-list li::before { content: "\2014"; position: absolute; left: 0; color: var(--accent); }
+    .related { margin-top: 4rem; padding-top: 2.5rem; border-top: 1px solid var(--rule); opacity: 0; animation: fadeUp 0.6s ease forwards; animation-delay: 0.6s; }
+    .related-label { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--mid); margin-bottom: 1.75rem; }
+    .related-card { border-top: 1px solid var(--rule); padding: 1.25rem 0; display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: center; cursor: pointer; text-decoration: none; }
+    .related-card:last-child { border-bottom: 1px solid var(--rule); }
+    .related-tag { font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.3rem; }
+    .related-title { font-family: "Libre Baskerville", serif; font-size: 0.95rem; font-weight: 400; color: var(--black); line-height: 1.35; transition: color 0.2s; }
+    .related-card:hover .related-title { color: var(--accent); }
+    .related-arrow { color: var(--rule); font-size: 1rem; transition: color 0.2s, transform 0.2s; }
+    .related-card:hover .related-arrow { color: var(--accent); transform: translateX(4px); }
+    .footer-newsletter { border-top: 1px solid var(--rule); padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
+    .newsletter-label { font-family: "Libre Baskerville", serif; font-size: 0.95rem; color: var(--black); white-space: nowrap; }
+    .newsletter-form { display: flex; flex: 1; max-width: 380px; }
+    .newsletter-input { flex: 1; background: transparent; border: none; border-bottom: 1px solid var(--rule); padding: 0.5rem 0; font-family: "Libre Baskerville", serif; font-size: 0.9rem; color: var(--black); outline: none; transition: border-color 0.2s; border-radius: 0; }
+    .newsletter-input:focus { border-color: var(--accent); }
+    .newsletter-submit { background: none; border: none; border-bottom: 1px solid var(--rule); padding: 0.5rem 0 0.5rem 1rem; font-family: "Lato", sans-serif; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--mid); cursor: pointer; transition: color 0.2s; white-space: nowrap; }
+    .newsletter-submit:hover { color: var(--accent); }
+    .newsletter-success { display: none; font-family: "Libre Baskerville", serif; font-style: italic; color: var(--accent); font-size: 0.9rem; }
+    footer { padding: 2rem 3rem; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; }
+    .footer-location { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mid); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--accent); }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 640px) {
+      nav.topnav { padding: 1.5rem; } .nav-links { gap: 1.5rem; } main { padding: 3rem 1.5rem; }
+      .footer-newsletter { flex-direction: column; align-items: flex-start; padding: 1.5rem; }
+      .newsletter-form { width: 100%; max-width: 100%; }
+      footer { padding: 1.5rem; flex-direction: column; align-items: flex-start; gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="topnav">
+    <a href="/index.html" class="nav-logo">Dad, Can You<span class="question-mark">?</span></a>
+    <ul class="nav-links">
+      <li><a href="/about.html">About</a></li>
+      <li><a href="/contribute.html">Contribute</a></li>
+    </ul>
+  </nav>
+  <main>
+    <p class="breadcrumb">
+      <a href="/teach-me.html">Teach Me</a>
+      <span class="sep">/</span>
+      Money
+    </p>
+    <div class="post-header">
+      <p class="post-tag">Money</p>
+      <h1 class="post-title">The fiat system. How money is actually created.</h1>
+      <div class="post-byline">
+        <span class="byline-name">Sean Philips</span>
+        <span class="byline-sep">|</span>
+        <span class="byline-tag">Dad, Can You?</span>
+      </div>
+    </div>
+    <div class="post-image-wrap">
+      <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200&q=80&auto=format&fit=crop" alt="The fiat system. How money is actually created." loading="lazy">
+    </div>
+    <div class="post-body">
+      <p>Most people spend their entire lives using money without knowing what it is. That&#8217;s not an accident. It&#8217;s easier to participate in a system you don&#8217;t question.</p>
+      <p>Here&#8217;s what they don&#8217;t teach you in school.</p>
+      <h2>What money actually is</h2>
+      <p>The dollar in your wallet is not backed by gold. It hasn&#8217;t been since 1971 when the US ended the Bretton Woods agreement. It&#8217;s backed by trust &#8212; trust in the government that issued it and the system that uses it. That&#8217;s called fiat currency. Fiat is Latin for &#8220;let it be done.&#8221; The money has value because we all agree it does.</p>
+      <h2>How it gets created</h2>
+      <p>When you take out a loan, the bank doesn&#8217;t reach into a vault and hand you existing money. It types a number into a computer. That number is new money that did not exist before you signed the paper. Your debt is the asset. The bank created money the moment you agreed to pay it back.</p>
+      <p>This is called fractional reserve banking. Banks are required to hold only a fraction of deposits in reserve. The rest they lend out. The money lent creates deposits elsewhere, which get lent again. One dollar of real deposit can become ten dollars in circulation.</p>
+      <h2>Why this matters to you</h2>
+      <p>Debt is how money enters the world. Which means inflation &#8212; the slow erosion of your purchasing power &#8212; is not a bug. It&#8217;s a feature. A system built on debt requires growth to function. And that growth comes partly at your expense, in the form of money that buys less every year.</p>
+      <p>Understanding this doesn&#8217;t mean you opt out. You can&#8217;t. But it changes how you think about saving, about debt, about what you&#8217;re actually holding when you hold dollars. A dollar saved today is worth less in ten years. Which is exactly why the money you save needs to be working &#8212; in assets, in index funds, in something that grows with or ahead of inflation.</p>
+    </div>
+    <div class="tldr">
+      <p class="tldr-label">TL;DR</p>
+      <ul class="tldr-list">
+        <li>Fiat currency is backed by trust, not gold &#8212; has been since 1971</li><li>Banks create money when they issue loans &#8212; your debt is their asset</li><li>Fractional reserve banking multiplies one dollar into many</li><li>Inflation is built into the system &#8212; your cash loses value over time</li><li>Money saved needs to grow faster than inflation or it&#8217;s shrinking</li>
+      </ul>
+    </div>
+    <div class="related">
+      <p class="related-label">Keep reading</p>
+      
+      <a class="related-card" href="save-20-percent.html">
+        <div>
+          <p class="related-tag">Your Money</p>
+          <p class="related-title">Save 20% of every paycheck</p>
+        </div>
+        <span class="related-arrow">&#8594;</span>
+      </a>
+      <a class="related-card" href="teach-me.html">
+        <div>
+          <p class="related-tag">Money</p>
+          <p class="related-title">Back to Teach Me</p>
+        </div>
+        <span class="related-arrow">&#8594;</span>
+      </a>
+    </div>
+  </main>
+  <div class="footer-newsletter">
+    <span class="newsletter-label">New posts to your inbox.</span>
+    <form class="newsletter-form" id="newsletter-form-fiat" action="https://formspree.io/f/mlgwvywy" method="POST">
+      <input type="hidden" name="_subject" value="DCY-SUBSCRIBER">
+      <input type="email" name="email" class="newsletter-input" placeholder="your@email.com" required autocomplete="email">
+      <button type="submit" class="newsletter-submit">Subscribe</button>
+    </form>
+    <p class="newsletter-success" id="newsletter-success-fiat">You're in.</p>
+  </div>
+  <footer>
+    <span class="footer-location">Winnipeg, Manitoba</span>
+    <div class="footer-links">
+      <a href="/about.html">About</a>
+      <a href="/contribute.html">Contribute</a>
+      <a href="mailto:artist@seanphilips.com">Contact</a>
+    </div>
+  </footer>
+  <script>
+    (function() {{
+      var form = document.getElementById('newsletter-form-fiat');
+      var success = document.getElementById('newsletter-success-fiat');
+      form.addEventListener('submit', async function(e) {{
+        e.preventDefault();
+        var data = new FormData(form);
+        var res = await fetch(form.action, {{ method: 'POST', body: data, headers: {{ 'Accept': 'application/json' }} }});
+        if (res.ok) {{ form.style.display = 'none'; success.style.display = 'block'; }}
+      }});
+    }})();
+  </script>
+</body>
+</html>

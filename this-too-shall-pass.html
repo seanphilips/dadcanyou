@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>This too shall pass &#8212; Dad, Can You?</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #111010; --offwhite: #F5F2EC; --accent: #9B2A2A;
+      --mid: #6B6560; --rule: #D8D3CB;
+    }
+    body { background-color: var(--offwhite); color: var(--black); font-family: "Lato", sans-serif; font-weight: 300; min-height: 100vh; display: flex; flex-direction: column; }
+    nav.topnav { padding: 2rem 3rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--rule); opacity: 0; animation: fadeUp 0.6s ease forwards; animation-delay: 0.1s; }
+    .nav-logo { font-family: "Libre Baskerville", serif; font-size: 1.1rem; font-weight: 400; color: var(--black); text-decoration: none; }
+    .nav-logo .question-mark { color: var(--accent); font-style: italic; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+    main { flex: 1; max-width: 600px; margin: 0 auto; padding: 5rem 2rem 6rem; width: 100%; }
+    .breadcrumb { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--mid); margin-bottom: 2rem; opacity: 0; animation: fadeUp 0.6s ease forwards; animation-delay: 0.2s; }
+    .breadcrumb a { color: var(--mid); text-decoration: none; transition: color 0.2s; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb .sep { margin: 0 0.5rem; }
+    .post-header { margin-bottom: 2.5rem; opacity: 0; animation: fadeUp 0.6s ease forwards; animation-delay: 0.3s; }
+    .post-tag { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem; }
+    .post-title { font-family: "Libre Baskerville", serif; font-size: clamp(1.5rem, 5vw, 2rem); font-weight: 400; line-height: 1.25; color: var(--black); margin-bottom: 1.25rem; }
+    .post-byline { display: flex; align-items: center; gap: 1rem; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 0.85rem 0; }
+    .byline-name { font-family: "Libre Baskerville", serif; font-size: 0.9rem; color: var(--black); }
+    .byline-sep { color: var(--rule); font-size: 1rem; }
+    .byline-tag { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid); }
+    .post-image-wrap { margin: 2.5rem 0; opacity: 0; animation: fadeUp 0.6s ease forwards; animation-delay: 0.4s; }
+    .post-image-wrap img { width: 100%; display: block; filter: grayscale(100%); }
+    .post-body { opacity: 0; animation: fadeUp 0.6s ease forwards; animation-delay: 0.5s; }
+    .post-body p { font-family: "Libre Baskerville", serif; font-size: 1rem; line-height: 1.8; color: var(--black); margin-bottom: 1.5rem; }
+    .post-body h2 { font-family: "Libre Baskerville", serif; font-size: 1.1rem; font-weight: 700; color: var(--black); margin: 2.5rem 0 0.75rem; }
+    .post-body strong { font-weight: 700; }
+    .post-body em { font-style: italic; color: var(--accent); }
+    .post-body a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent); }
+    .tldr { margin-top: 3rem; padding: 1.75rem 2rem; border-left: 3px solid var(--accent); background: rgba(155,42,42,0.04); }
+    .tldr-label { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; font-family: "Lato", sans-serif; }
+    .tldr-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .tldr-list li { font-family: "Libre Baskerville", serif; font-size: 0.92rem; line-height: 1.5; color: var(--black); padding-left: 1.1rem; position: relative; }
+    .tldr-list li::before { content: "\2014"; position: absolute; left: 0; color: var(--accent); }
+    .related { margin-top: 4rem; padding-top: 2.5rem; border-top: 1px solid var(--rule); opacity: 0; animation: fadeUp 0.6s ease forwards; animation-delay: 0.6s; }
+    .related-label { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--mid); margin-bottom: 1.75rem; }
+    .related-card { border-top: 1px solid var(--rule); padding: 1.25rem 0; display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: center; cursor: pointer; text-decoration: none; }
+    .related-card:last-child { border-bottom: 1px solid var(--rule); }
+    .related-tag { font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.3rem; }
+    .related-title { font-family: "Libre Baskerville", serif; font-size: 0.95rem; font-weight: 400; color: var(--black); line-height: 1.35; transition: color 0.2s; }
+    .related-card:hover .related-title { color: var(--accent); }
+    .related-arrow { color: var(--rule); font-size: 1rem; transition: color 0.2s, transform 0.2s; }
+    .related-card:hover .related-arrow { color: var(--accent); transform: translateX(4px); }
+    .footer-newsletter { border-top: 1px solid var(--rule); padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
+    .newsletter-label { font-family: "Libre Baskerville", serif; font-size: 0.95rem; color: var(--black); white-space: nowrap; }
+    .newsletter-form { display: flex; flex: 1; max-width: 380px; }
+    .newsletter-input { flex: 1; background: transparent; border: none; border-bottom: 1px solid var(--rule); padding: 0.5rem 0; font-family: "Libre Baskerville", serif; font-size: 0.9rem; color: var(--black); outline: none; transition: border-color 0.2s; border-radius: 0; }
+    .newsletter-input:focus { border-color: var(--accent); }
+    .newsletter-submit { background: none; border: none; border-bottom: 1px solid var(--rule); padding: 0.5rem 0 0.5rem 1rem; font-family: "Lato", sans-serif; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--mid); cursor: pointer; transition: color 0.2s; white-space: nowrap; }
+    .newsletter-submit:hover { color: var(--accent); }
+    .newsletter-success { display: none; font-family: "Libre Baskerville", serif; font-style: italic; color: var(--accent); font-size: 0.9rem; }
+    footer { padding: 2rem 3rem; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; }
+    .footer-location { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mid); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--accent); }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 640px) {
+      nav.topnav { padding: 1.5rem; } .nav-links { gap: 1.5rem; } main { padding: 3rem 1.5rem; }
+      .footer-newsletter { flex-direction: column; align-items: flex-start; padding: 1.5rem; }
+      .newsletter-form { width: 100%; max-width: 100%; }
+      footer { padding: 1.5rem; flex-direction: column; align-items: flex-start; gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="topnav">
+    <a href="/index.html" class="nav-logo">Dad, Can You<span class="question-mark">?</span></a>
+    <ul class="nav-links">
+      <li><a href="/about.html">About</a></li>
+      <li><a href="/contribute.html">Contribute</a></li>
+    </ul>
+  </nav>
+  <main>
+    <p class="breadcrumb">
+      <a href="/teach-me.html">Teach Me</a>
+      <span class="sep">/</span>
+      Hard Times
+    </p>
+    <div class="post-header">
+      <p class="post-tag">Hard Times</p>
+      <h1 class="post-title">This too shall pass.</h1>
+      <div class="post-byline">
+        <span class="byline-name">Sean Philips</span>
+        <span class="byline-sep">|</span>
+        <span class="byline-tag">Dad, Can You?</span>
+      </div>
+    </div>
+    <div class="post-image-wrap">
+      <img src="https://images.unsplash.com/photo-1476304884326-cd2c88572c5f?w=1200&q=80&auto=format&fit=crop" alt="This too shall pass." loading="lazy">
+    </div>
+    <div class="post-body">
+      <p>There&#8217;s an old story about a king who asks his advisors to give him something true in all situations, good times and bad. They come back with four words engraved on a ring: <em>This too shall pass.</em></p>
+      <p>He wears it in battle when he&#8217;s losing. He wears it when he wins. Both times it does its work.</p>
+      <h2>What actually gets you through</h2>
+      <p>Not optimism. Not toughness. Not telling yourself it&#8217;ll be fine when you don&#8217;t know that it will.</p>
+      <p>What gets you through is having something inside that doesn&#8217;t depend on the circumstances. A sense of who you are that isn&#8217;t built on whether things are going well. When everything is uncertain &#8212; job gone, relationship gone, health gone &#8212; the thing you fall back on is your own character.</p>
+      <p>If you&#8217;ve been honest, you know it. If you&#8217;ve kept your word, you know it. If you&#8217;ve shown up for people, they&#8217;ll show up for you. That&#8217;s not nothing when everything else is gone. That&#8217;s actually quite a lot.</p>
+      <h2>The trap of good times</h2>
+      <p>Good times are their own danger. They make you forget that the ring is still on your finger. They make you sloppy, careless, entitled. The man who handles bad times with grace usually built something in the good times &#8212; some practice of integrity, some habit of discipline &#8212; that didn&#8217;t feel necessary at the time.</p>
+      <h2>What you can control</h2>
+      <p>You cannot control whether hard times come. They will come. You can control what you&#8217;re made of when they do. And what you&#8217;re made of is built in the ordinary days, long before you need it.</p>
+    </div>
+    <div class="tldr">
+      <p class="tldr-label">TL;DR</p>
+      <ul class="tldr-list">
+        <li>Neither good times nor bad times last &#8212; both pass</li><li>Optimism isn&#8217;t what gets you through &#8212; character is</li><li>Honour and integrity give you something to stand on when everything else is gone</li><li>Good times are when you build what you&#8217;ll need in hard times</li><li>What you&#8217;re made of is built in the ordinary days</li>
+      </ul>
+    </div>
+    <div class="related">
+      <p class="related-label">Keep reading</p>
+      
+      <a class="related-card" href="man-of-your-word.html">
+        <div>
+          <p class="related-tag">Character</p>
+          <p class="related-title">Being a man of your word. No matter what.</p>
+        </div>
+        <span class="related-arrow">&#8594;</span>
+      </a>
+      <a class="related-card" href="teach-me.html">
+        <div>
+          <p class="related-tag">Hard Times</p>
+          <p class="related-title">Back to Teach Me</p>
+        </div>
+        <span class="related-arrow">&#8594;</span>
+      </a>
+    </div>
+  </main>
+  <div class="footer-newsletter">
+    <span class="newsletter-label">New posts to your inbox.</span>
+    <form class="newsletter-form" id="newsletter-form-ttsp" action="https://formspree.io/f/mlgwvywy" method="POST">
+      <input type="hidden" name="_subject" value="DCY-SUBSCRIBER">
+      <input type="email" name="email" class="newsletter-input" placeholder="your@email.com" required autocomplete="email">
+      <button type="submit" class="newsletter-submit">Subscribe</button>
+    </form>
+    <p class="newsletter-success" id="newsletter-success-ttsp">You're in.</p>
+  </div>
+  <footer>
+    <span class="footer-location">Winnipeg, Manitoba</span>
+    <div class="footer-links">
+      <a href="/about.html">About</a>
+      <a href="/contribute.html">Contribute</a>
+      <a href="mailto:artist@seanphilips.com">Contact</a>
+    </div>
+  </footer>
+  <script>
+    (function() {{
+      var form = document.getElementById('newsletter-form-ttsp');
+      var success = document.getElementById('newsletter-success-ttsp');
+      form.addEventListener('submit', async function(e) {{
+        e.preventDefault();
+        var data = new FormData(form);
+        var res = await fetch(form.action, {{ method: 'POST', body: data, headers: {{ 'Accept': 'application/json' }} }});
+        if (res.ok) {{ form.style.display = 'none'; success.style.display = 'block'; }}
+      }});
+    }})();
+  </script>
+</body>
+</html>
