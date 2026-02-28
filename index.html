@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dad, Can You? — Winnipeg</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --black: #111010;
+      --offwhite: #F5F2EC;
+      --accent: #9B2A2A;
+      --accent-hover: #7a1f1f;
+      --mid: #6B6560;
+      --rule: #D8D3CB;
+    }
+
+    html {
+      font-size: 16px;
+    }
+
+    body {
+      background-color: var(--offwhite);
+      color: var(--black);
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── NAV ── */
+    nav {
+      padding: 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--rule);
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards;
+      animation-delay: 0.1s;
+    }
+
+    .nav-logo {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      color: var(--black);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--mid);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards;
+      animation-delay: 0.3s;
+    }
+
+    .hero-title {
+      font-family: 'Libre Baskerville', serif;
+      font-size: clamp(3.5rem, 10vw, 7rem);
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: var(--black);
+      margin-bottom: 0.3rem;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards;
+      animation-delay: 0.45s;
+    }
+
+    .hero-title .question-mark {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    .hero-rule {
+      margin: 2.5rem auto;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards;
+      animation-delay: 0.65s;
+    }
+
+    /* ── THREE LANES ── */
+    .lanes {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards;
+      animation-delay: 0.8s;
+    }
+
+    .lane {
+      display: block;
+      width: 100%;
+      max-width: 520px;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--rule);
+      text-decoration: none;
+      text-align: left;
+      position: relative;
+      transition: all 0.25s ease;
+    }
+
+    .lane:first-child {
+      border-top: 1px solid var(--rule);
+    }
+
+    .lane-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 0.5rem;
+      transition: color 0.25s;
+    }
+
+    .lane-title {
+      font-family: 'Libre Baskerville', serif;
+      font-size: clamp(1.4rem, 4vw, 1.9rem);
+      font-weight: 400;
+      color: var(--black);
+      line-height: 1.2;
+      transition: color 0.25s;
+    }
+
+    .lane-title em {
+      font-style: italic;
+      color: var(--accent);
+      transition: color 0.25s;
+    }
+
+    .lane-arrow {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%) translateX(-4px);
+      font-size: 1.2rem;
+      color: var(--rule);
+      transition: all 0.25s ease;
+      opacity: 0;
+    }
+
+    .lane:hover .lane-label {
+      color: var(--accent);
+    }
+
+    .lane:hover .lane-title {
+      color: var(--accent);
+    }
+
+    .lane:hover .lane-arrow {
+      opacity: 1;
+      color: var(--accent);
+      transform: translateY(-50%) translateX(0);
+    }
+
+    /* Coming soon lane */
+    .lane.coming-soon {
+      opacity: 0.35;
+      cursor: default;
+      pointer-events: none;
+    }
+
+    .lane.coming-soon .lane-label::after {
+      content: ' — coming soon';
+      font-style: italic;
+      letter-spacing: 0.08em;
+      text-transform: none;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2rem 3rem;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards;
+      animation-delay: 1.1s;
+    }
+
+    .footer-location {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mid);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-links a {
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--mid);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 640px) {
+      nav {
+        padding: 1.5rem 1.5rem;
+      }
+
+      .nav-links {
+        gap: 1.5rem;
+      }
+
+      .hero {
+        padding: 4rem 1.5rem 3rem;
+        align-items: flex-start;
+        text-align: left;
+      }
+
+      .hero-eyebrow {
+        text-align: left;
+      }
+
+      .hero-rule {
+        margin: 2rem 0;
+      }
+
+      .lane {
+        max-width: 100%;
+      }
+
+      footer {
+        padding: 1.5rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+    }
+
+    /* ── NEWSLETTER ── */
+    .footer-newsletter {
+      border-top: 1px solid var(--rule);
+      padding: 2rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards;
+      animation-delay: 0.75s;
+    }
+
+    .newsletter-label {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 0.95rem;
+      color: var(--black);
+      white-space: nowrap;
+    }
+
+    .newsletter-form {
+      display: flex;
+      gap: 0;
+      flex: 1;
+      max-width: 380px;
+    }
+
+    .newsletter-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--rule);
+      padding: 0.5rem 0;
+      font-family: 'Libre Baskerville', serif;
+      font-size: 0.9rem;
+      color: var(--black);
+      outline: none;
+      transition: border-color 0.2s;
+      border-radius: 0;
+      -webkit-appearance: none;
+    }
+
+    .newsletter-input:focus {
+      border-color: var(--accent);
+    }
+
+    .newsletter-submit {
+      background: none;
+      border: none;
+      border-bottom: 1px solid var(--rule);
+      padding: 0.5rem 0 0.5rem 1rem;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--mid);
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+
+    .newsletter-submit:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .newsletter-success {
+      display: none;
+      font-family: 'Libre Baskerville', serif;
+      font-style: italic;
+      color: var(--accent);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 640px) {
+      .footer-newsletter {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.5rem;
+      }
+      .newsletter-form {
+        width: 100%;
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-logo">Dad, Can You?</a>
+    <ul class="nav-links">
+      <li><a href="/about">About</a></li>
+      <li><a href="/contribute">Contribute</a></li>
+    </ul>
+  </nav>
+
+  <main class="hero">
+
+    <p class="hero-eyebrow">Winnipeg</p>
+
+    <h1 class="hero-title">Dad, Can You<span class="question-mark">?</span></h1>
+
+    <div class="hero-rule"></div>
+
+    <nav class="lanes" aria-label="Main sections">
+
+      <a href="/show-me" class="lane">
+        <p class="lane-label">Skills &amp; how-to</p>
+        <p class="lane-title">Dad, can you <em>show me?</em></p>
+        <span class="lane-arrow" aria-hidden="true">→</span>
+      </a>
+
+      <a href="/teach-me" class="lane">
+        <p class="lane-label">Elders &amp; life lessons</p>
+        <p class="lane-title">Dad, can you <em>teach me?</em></p>
+        <span class="lane-arrow" aria-hidden="true">→</span>
+      </a>
+
+      <div class="lane coming-soon" aria-hidden="true">
+        <p class="lane-label">Local help</p>
+        <p class="lane-title">Dad, can you <em>come over?</em></p>
+      </div>
+
+    </nav>
+
+  </main>
+
+
+  <div class="footer-newsletter">
+    <span class="newsletter-label">New posts to your inbox.</span>
+    <form class="newsletter-form" id="newsletter-form-idx" action="https://formspree.io/f/mlgwvywy" method="POST">
+      <input type="hidden" name="_subject" value="DCY-SUBSCRIBER">
+      <input type="email" name="email" class="newsletter-input" placeholder="your@email.com" required autocomplete="email">
+      <button type="submit" class="newsletter-submit">Subscribe</button>
+    </form>
+    <p class="newsletter-success" id="newsletter-success-idx">You're in.</p>
+  </div>
+  <footer>
+    <span class="footer-location">Winnipeg, Manitoba</span>
+    <div class="footer-links">
+      <a href="/about">About</a>
+      <a href="/contribute">Contribute</a>
+      <a href="/cdn-cgi/l/email-protection#83ebe6efefecc3e7e2e7e0e2edfaecf6ade0ecee">Contact</a

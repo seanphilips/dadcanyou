@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Show Me — Dad, Can You?</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #111010;
+      --offwhite: #F5F2EC;
+      --accent: #9B2A2A;
+      --accent-hover: #7a1f1f;
+      --mid: #6B6560;
+      --rule: #D8D3CB;
+    }
+
+    body {
+      background-color: var(--offwhite);
+      color: var(--black);
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* NAV */
+    nav.topnav {
+      padding: 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--rule);
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards;
+      animation-delay: 0.1s;
+    }
+
+    .nav-logo {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      color: var(--black);
+      text-decoration: none;
+    }
+
+    .nav-logo .question-mark { color: var(--accent); font-style: italic; }
+
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+
+    .nav-links a {
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--mid);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+
+    /* MAIN */
+    main {
+      flex: 1;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 5rem 2rem 6rem;
+      width: 100%;
+    }
+
+    .page-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards;
+      animation-delay: 0.2s;
+    }
+
+    .page-headline {
+      font-family: 'Libre Baskerville', serif;
+      font-size: clamp(1.6rem, 5vw, 2.2rem);
+      font-weight: 400;
+      color: var(--black);
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards;
+      animation-delay: 0.3s;
+    }
+
+    .page-headline em { font-style: italic; color: var(--accent); }
+
+    /* FILTERS */
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards;
+      animation-delay: 0.4s;
+    }
+
+    .filter-btn {
+      background: none;
+      border: 1px solid var(--rule);
+      padding: 0.4rem 0.9rem;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--mid);
+      cursor: pointer;
+      transition: all 0.2s;
+      border-radius: 0;
+    }
+
+    .filter-btn:hover { border-color: var(--black); color: var(--black); }
+    .filter-btn.active { background: var(--black); border-color: var(--black); color: var(--offwhite); }
+
+    /* FEED */
+    .feed {
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards;
+      animation-delay: 0.5s;
+    }
+
+    .post-card {
+      border-top: 1px solid var(--rule);
+      padding: 2rem 0;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1rem;
+      align-items: start;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+
+    .post-card:last-child { border-bottom: 1px solid var(--rule); }
+    .post-card:hover .post-title { color: var(--accent); }
+
+    .post-tag {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.4rem;
+    }
+
+    .post-title {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      line-height: 1.35;
+      color: var(--black);
+      margin-bottom: 0.5rem;
+      transition: color 0.2s;
+    }
+
+    .post-excerpt {
+      font-size: 0.9rem;
+      line-height: 1.65;
+      color: var(--mid);
+      margin-bottom: 0.75rem;
+    }
+
+    .post-meta {
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      color: var(--mid);
+    }
+
+    .post-meta span { color: var(--black); }
+
+    .post-arrow {
+      font-size: 1.2rem;
+      color: var(--rule);
+      padding-top: 0.25rem;
+      transition: color 0.2s, transform 0.2s;
+    }
+
+    .post-card:hover .post-arrow { color: var(--accent); transform: translateX(4px); }
+
+    .post-card.hidden { display: none; }
+
+    /* NEWSLETTER */
+    .footer-newsletter {
+      border-top: 1px solid var(--rule);
+      padding: 2rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .newsletter-label {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 0.95rem;
+      color: var(--black);
+      white-space: nowrap;
+    }
+
+    .newsletter-form { display: flex; flex: 1; max-width: 380px; }
+
+    .newsletter-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--rule);
+      padding: 0.5rem 0;
+      font-family: 'Libre Baskerville', serif;
+      font-size: 0.9rem;
+      color: var(--black);
+      outline: none;
+      transition: border-color 0.2s;
+      border-radius: 0;
+    }
+
+    .newsletter-input:focus { border-color: var(--accent); }
+
+    .newsletter-submit {
+      background: none;
+      border: none;
+      border-bottom: 1px solid var(--rule);
+      padding: 0.5rem 0 0.5rem 1rem;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--mid);
+      cursor: pointer;
+      transition: color 0.2s;
+      white-space: nowrap;
+    }
+
+    .newsletter-submit:hover { color: var(--accent); }
+
+    .newsletter-success {
+      display: none;
+      font-family: 'Libre Baskerville', serif;
+      font-style: italic;
+      color: var(--accent);
+      font-size: 0.9rem;
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 2rem 3rem;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-location {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mid);
+    }
+
+    .footer-links { display: flex; gap: 1.5rem; }
+
+    .footer-links a {
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--mid);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--accent); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 640px) {
+      nav.topnav { padding: 1.5rem; }
+      .nav-links { gap: 1.5rem; }
+      main { padding: 3rem 1.5rem; }
+      .footer-newsletter { flex-direction: column; align-items: flex-start; padding: 1.5rem; }
+      .newsletter-form { width: 100%; max-width: 100%; }
+      footer { padding: 1.5rem; flex-direction: column; align-items: flex-start; gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="topnav">
+    <a href="/index.html" class="nav-logo">Dad, Can You<span class="question-mark">?</span></a>
+    <ul class="nav-links">
+      <li><a href="/about.html">About</a></li>
+      <li><a href="/contribute.html">Contribute</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <p class="page-label">Skills &amp; How-To</p>
+    <h1 class="page-headline">Dad, can you show me<em>?</em></h1>
+
+    <div class="filters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="the-house">The House</button>
+      <button class="filter-btn" data-filter="your-car">Your Car</button>
+      <button class="filter-btn" data-filter="your-money">Your Money</button>
+      <button class="filter-btn" data-filter="your-health">Your Health</button>
+      <button class="filter-btn" data-filter="your-work">Your Work</button>
+    </div>
+
+    <div class="feed">
+
+      <div class="post-card" data-topic="the-house">
+        <div>
+          <p class="post-tag">The House</p>
+          <h2 class="post-title">How to fix a running toilet</h2>
+          <p class="post-excerpt">It runs all night and you keep ignoring it. Here's what's actually happening inside the tank, and how to fix it in under an hour with a $12 part.</p>
+          <p class="post-meta">By <span>Gary Kowalski</span> &nbsp;&middot;&nbsp; Coming soon</p>
+        </div>
+        <div class="post-arrow">→</div>
+      </div>
+
+      <div class="post-card" data-topic="the-house">
+        <div>
+          <p class="post-tag">The House</p>
+          <h2 class="post-title">How to patch a drywall hole</h2>
+          <p class="post-excerpt">Door handle went through the wall. Happens. Three steps, a weekend to dry, and nobody will ever know.</p>
+          <p class="post-meta">By <span>Gary Kowalski</span> &nbsp;&middot;&nbsp; Coming soon</p>
+        </div>
+        <div class="post-arrow">→</div>
+      </div>
+
+      <div class="post-card" data-topic="the-house">
+        <div>
+          <p class="post-tag">The House</p>
+          <h2 class="post-title">How to stop a dripping tap</h2>
+          <p class="post-excerpt">The washer. It's almost always the washer. Here's how to replace it without calling anyone.</p>
+          <p class="post-meta">By <span>Gary Kowalski</span> &nbsp;&middot;&nbsp; Coming soon</p>
+        </div>
+        <div class="post-arrow">→</div>
+      </div>
+
+      <div class="post-card" data-topic="your-car">
+        <div>
+          <p class="post-tag">Your Car</p>
+          <h2 class="post-title">How to jump start a car</h2>
+          <p class="post-excerpt">Winnipeg January. Dead battery. Here's how to do it right so you don't fry anything, including yourself.</p>
+          <p class="post-meta">By <span>Mike Danchuk</span> &nbsp;&middot;&nbsp; Coming soon</p>
+        </div>
+        <div class="post-arrow">→</div>
+      </div>
+
+      <div class="post-card" data-topic="your-car">
+        <div>
+          <p class="post-tag">Your Car</p>
+          <h2 class="post-title">How to buy a used car without getting burned</h2>
+          <p class="post-excerpt">What to look for, what to ask, what they're hoping you won't notice. A mechanic walks you through it.</p>
+          <p class="post-meta">By <span>Mike Danchuk</span> &nbsp;&middot;&nbsp; Coming soon</p>
+        </div>
+        <div class="post-arrow">→</div>
+      </div>
+
+      <div class="post-card" data-topic="your-car">
+        <div>
+          <p class="post-tag">Your Car</p>
+          <h2 class="post-title">How to winterize your car</h2>
+          <p class="post-excerpt">Tires, battery, block heater, washer fluid. What actually matters before November hits.</p>
+          <p class="post-meta">By <span>Mike Danchuk</span> &nbsp;&middot;&nbsp; Coming soon</p>
+        </div>
+        <div class="post-arrow">→</div>
+      </div>
+
+      <div class="post-card" data-topic="your-money">
+        <div>
+          <p class="post-tag">Your Money</p>
+          <h2 class="post-title">How to make a budget that actually works</h2>
+          <p class="post-excerpt">Not a spreadsheet you abandon in February. A system that fits how you actually live.</p>
+          <p class="post-meta">By <span>David Orenstein</span> &nbsp;&middot;&nbsp; Coming soon</p>
+        </div>
+        <div class="post-arrow">→</div>
+      </div>
+
+      <div class="post-card" data-topic="your-money">
+        <div>
+          <p class="post-tag">Your Money</p>
+          <h2 class="post-title">How credit scores work</h2>
+          <p class="post-excerpt">What goes in, what hurts it, what doesn't matter as much as you think, and how to build yours up.</p>
+          <p class="post-meta">By <span>David Orenstein</span> &nbsp;&middot;&nbsp; Coming soon</p>
+        </div>
+        <div class="post-arrow">→</div>
+      </div>
+
+      <div class="post-card" data-topic="your-money">
+        <div>
+          <p class="post-tag">Your Money</p>
+          <h2 class="post-title">How to do your taxes for the first time</h2>
+          <p class="post-excerpt">It's less complicated than it looks. Here's what you actually need, and how to get through it.</p>
+          <p class="post-meta">By <span>David Orenstein</span> &nbsp;&middot;&nbsp; Coming soon</p>
+        </div>
+        <div class="post-arrow">→</div>
+      </div>
+
+      <div class="post-card" data-topic="your-health">
+        <div>
+          <p class="post-tag">Your Health</p>
+          <h2 class="post-title">When to actually see a doctor</h2>
+          <p class="post-excerpt">Men wait too long. Here's a plain-language guide to what warrants a visit and what doesn't.</p>
+          <p class="post-meta">By <span>Dr. Paul Nkemdirim</span> &nbsp;&middot;&nbsp; Coming soon</p>
+        </div>
+        <div class="post-arrow">→</div>
+      </div>
+
+      <div class="post-card" data-topic="your-health">
+        <div>
+          <p class="post-tag">Your Health</p>
+          <h2 class="post-title">How to set up a basic workout</h2>
+          <p class="post-excerpt">No gym required. No complicated program. Just what your body needs and how to start without injuring yourself.</p>
+          <p class="post-meta">By <span>Dr. Paul Nkemdirim</span> &nbsp;&middot;&nbsp; Coming soon</p>
+        </div>
+        <div class="post-arrow">→</div>
+      </div>
+
+      <div class="post-card" data-topic="your-work">
+        <div>
+          <p class="post-tag">Your Work</p>
+          <h2 class="post-title">How to negotiate your starting salary</h2>
+          <p class="post-excerpt">Most people don't ask. Here's how to ask well, what to say when they push back, and why it matters more than you think.</p>
+          <p class="post-meta">By <span>Ray Fontaine</span> &nbsp;&middot;&nbsp; Coming soon</p>
+        </div>
+        <div class="post-arrow">→</div>
+      </div>
+
+      <div class="post-card" data-topic="your-work">
+        <div>
+          <p class="post-tag">Your Work</p>
+          <h2 class="post-title">How to write a resume that doesn't get ignored</h2>
+          <p class="post-excerpt">What they're actually looking for in the first ten seconds, and how to make sure they find it.</p>
+          <p class="post-meta">By <span>Ray Fontaine</span> &nbsp;&middot;&nbsp; Coming soon</p>
+        </div>
+        <div class="post-arrow">→</div>
+      </div>
+
+    </div>
+  </main>
+
+  <div class="footer-newsletter">
+    <span class="newsletter-label">New posts to your inbox.</span>
+    <form class="newsletter-form" id="newsletter-form-sm" action="https://formspree.io/f/mlgwvywy" method="POST">
+      <input type="hidden" name="_subject" value="DCY-SUBSCRIBER">
+      <input type="email" name="email" class="newsletter-input" placeholder="your@email.com" required autocomplete="email">
+      <button type="submit" class="newsletter-submit">Subscribe</button>
+    </form>
+    <p class="newsletter-success" id="newsletter-success-sm">You're in.</p>
+  </div>
+
+  <footer>
+    <span class="footer-location">Winnipeg, Manitoba</span>
+    <div class="footer-links">
+      <a href="/about.html">About</a>
+      <a href="/contribute.html">Contribute</a>
+      <a href="/cdn-cgi/l/email-protection#81e0f3f5e8f2f5c1f2e4e0eff1e9e8ede8f1f2afe2eeec">Contact</a>
+    </div>
+  </footer>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    // Filter
+    const btns = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.post-card');
+
+    btns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        btns.forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        var filter = btn.getAttribute('data-filter');
+        cards.forEach(function(card) {
+          if (filter === 'all' || card.getAttribute('data-topic') === filter) {
+            card.classList.remove('hidden');
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+      });
+    });
+
+    // Newsletter
+    (function() {
+      var form = document.getElementById('newsletter-form-sm');
+      var success = document.getElementById('newsletter-success-sm');
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        var data = new FormData(form);
+        var res = await fetch(form.action, { method: 'POST', body: data, headers: { 'Accept': 'applic

@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contribute — Dad, Can You?</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --black: #111010;
+      --offwhite: #F5F2EC;
+      --accent: #9B2A2A;
+      --accent-hover: #7a1f1f;
+      --mid: #6B6560;
+      --rule: #D8D3CB;
+    }
+
+    body {
+      background-color: var(--offwhite);
+      color: var(--black);
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── NAV ── */
+    nav.topnav {
+      padding: 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--rule);
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards;
+      animation-delay: 0.1s;
+    }
+
+    .nav-logo {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      color: var(--black);
+      text-decoration: none;
+    }
+
+    .nav-logo .question-mark {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--mid);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--accent);
+    }
+
+    /* ── MAIN ── */
+    main {
+      flex: 1;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 6rem 2rem 6rem;
+      width: 100%;
+    }
+
+    .page-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards;
+      animation-delay: 0.2s;
+    }
+
+    /* ── HEADLINE ── */
+    .headline {
+      font-family: 'Libre Baskerville', serif;
+      font-size: clamp(1.6rem, 5vw, 2.2rem);
+      font-weight: 400;
+      line-height: 1.25;
+      color: var(--black);
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards;
+      animation-delay: 0.3s;
+    }
+
+    /* ── BODY ── */
+    .body-section {
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards;
+      animation-delay: 0.45s;
+    }
+
+    .body-text {
+      font-family: 'Libre Baskerville', serif;
+      font-size: clamp(1rem, 2.5vw, 1.15rem);
+      line-height: 1.7;
+      color: var(--black);
+      margin-bottom: 1.5rem;
+    }
+
+    .body-text em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    /* ── THE ASK ── */
+    .the-ask {
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      padding: 2rem 0;
+      margin: 2.5rem 0;
+    }
+
+    .ask-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 0.75rem;
+    }
+
+    .ask-text {
+      font-family: 'Libre Baskerville', serif;
+      font-size: clamp(1.2rem, 4vw, 1.6rem);
+      font-weight: 400;
+      line-height: 1.3;
+      color: var(--black);
+    }
+
+    .ask-text em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    /* ── CONTACT ── */
+    .contact-section {
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards;
+      animation-delay: 0.65s;
+    }
+
+    .contact-text {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--mid);
+      margin-bottom: 1.25rem;
+    }
+
+    .contact-link {
+      display: inline-block;
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1rem;
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid var(--accent);
+      padding-bottom: 0.15rem;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .contact-link:hover {
+      color: var(--accent-hover);
+      border-color: var(--accent-hover);
+    }
+
+    /* ── FORM ── */
+    .form-section {
+      margin-top: 2.5rem;
+    }
+
+    .form-field {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-field label {
+      display: block;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-field input,
+    .form-field textarea {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--rule);
+      padding: 0.6rem 0;
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1rem;
+      color: var(--black);
+      outline: none;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+      border-radius: 0;
+    }
+
+    .form-field input:focus,
+    .form-field textarea:focus {
+      border-color: var(--accent);
+    }
+
+    .form-field textarea {
+      resize: none;
+      height: 80px;
+      line-height: 1.6;
+    }
+
+    .form-submit {
+      margin-top: 2rem;
+      background: none;
+      border: 1px solid var(--black);
+      padding: 0.8rem 2rem;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--black);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .form-submit:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--offwhite);
+    }
+
+    .form-success {
+      display: none;
+      font-family: 'Libre Baskerville', serif;
+      font-style: italic;
+      color: var(--accent);
+      font-size: 1.05rem;
+      margin-top: 1.5rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2rem 3rem;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards;
+      animation-delay: 0.85s;
+    }
+
+    .footer-location {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mid);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-links a {
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--mid);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 640px) {
+      nav.topnav {
+        padding: 1.5rem;
+      }
+
+      .nav-links {
+        gap: 1.5rem;
+      }
+
+      main {
+        padding: 4rem 1.5rem;
+      }
+
+      footer {
+        padding: 1.5rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+    }
+
+    /* ── NEWSLETTER ── */
+    .footer-newsletter {
+      border-top: 1px solid var(--rule);
+      padding: 2rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards;
+      animation-delay: 0.75s;
+    }
+
+    .newsletter-label {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 0.95rem;
+      color: var(--black);
+      white-space: nowrap;
+    }
+
+    .newsletter-form {
+      display: flex;
+      gap: 0;
+      flex: 1;
+      max-width: 380px;
+    }
+
+    .newsletter-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--rule);
+      padding: 0.5rem 0;
+      font-family: 'Libre Baskerville', serif;
+      font-size: 0.9rem;
+      color: var(--black);
+      outline: none;
+      transition: border-color 0.2s;
+      border-radius: 0;
+      -webkit-appearance: none;
+    }
+
+    .newsletter-input:focus {
+      border-color: var(--accent);
+    }
+
+    .newsletter-submit {
+      background: none;
+      border: none;
+      border-bottom: 1px solid var(--rule);
+      padding: 0.5rem 0 0.5rem 1rem;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--mid);
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+
+    .newsletter-submit:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .newsletter-success {
+      display: none;
+      font-family: 'Libre Baskerville', serif;
+      font-style: italic;
+      color: var(--accent);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 640px) {
+      .footer-newsletter {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.5rem;
+      }
+      .newsletter-form {
+        width: 100%;
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="topnav">
+    <a href="/" class="nav-logo">Dad, Can You<span class="question-mark">?</span></a>
+    <ul class="nav-links">
+      <li><a href="/about.html">About</a></li>
+      <li><a href="/contribute.html" class="active">Contribute</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <p class="page-label">Contribute</p>
+
+    <h1 class="headline">You know something worth passing on.</h1>
+
+    <div class="body-section">
+      <p class="body-text">A trade you spent decades learning. A profession. A life with hard lessons in it.</p>
+      <p class="body-text">We're not asking for much. <em>Two hours of your time.</em> We come to you, we film you doing what you know, and we ask you a few questions about what you've learned along the way.</p>
+      <p class="body-text">Your knowledge enriches our community. On this site. Free. For the people who need it.</p>
+
+      <div class="the-ask">
+        <p class="ask-label">The ask</p>
+        <p class="ask-text">Two hours. <em>That's it.</em></p>
+      </div>
+    </div>
+
+    <div class="contact-section">
+      <p class="contact-text">If that sounds like something you'd do, get in touch.</p>
+
+      <div class="form-section">
+        <form id="contribute-form" action="https://formspree.io/f/xkovelvr" method="POST">
+          <input type="hidden" name="_subject" value="DCY-CONTRIBUTOR">
+
+          <div class="form-field">
+            <label for="name">Your name</label>
+            <input type="text" id="name" name="name" required autocomplete="name">
+          </div>
+
+          <div class="form-field">
+            <label for="email">Your email</label>
+            <input type="email" id="email" name="email" required autocomplete="email">
+          </div>
+
+          <div class="form-field">
+            <label for="message">What do you know how to do?</label>
+            <textarea id="message" name="message"></textarea>
+          </div>
+
+          <button type="submit" class="form-submit">Send it</button>
+        </form>
+
+        <p class="form-success" id="form-success">Got it. We'll be in touch.</p>
+      </div>
+    </div>
+
+    <script>
+      const form = document.getElementById('contribute-form');
+      const success = document.getElementById('form-success');
+
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const data = new FormData(form);
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+        if (response.ok) {
+          form.style.display = 'none';
+          success.style.display = 'block';
+        }
+      });
+    </script>
+
+  </main>
+
+
+  <div class="footer-newsletter">
+    <span class="newsletter-label">New posts to your inbox.</span>
+    <form class="newsletter-form" id="newsletter-form-con" action="https://formspree.io/f/mlgwvywy" method="POST">
+      <input type="hidden" name="_subject" value="DCY-SUBSCRIBER">
+      <input type="email" name="email" class="newsletter-input" placeholder="your@email.com" required autocomplete="email">
+      <button type="submit" class="newsletter-submit">Subscribe</button>
+    </form>
+    <p class="newsletter-success" id="newsletter-success-con">You're in.</p>
+  </div>
+  <footer>
+    <span class="footer-location">Winnipeg, Manitoba</span>
+    <div class="footer-links">
+      <a href="/about.html">About</a>
+     
